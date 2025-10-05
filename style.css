@@ -435,3 +435,25 @@ h3, .category-title {
   pointer-events: none;
   mix-blend-mode: color; /* recolors even greys while keeping luminance */
 }
+.toggle-token {
+  position: absolute;
+  left: 80px;
+  top: 16px;
+  width: 64px;                 /* adjust to your charm’s size */
+  height: 64px;
+  background-image: url("mycharm.png");  /* 🔹 your image */
+  background-size: contain;    /* scale to fit */
+  background-repeat: no-repeat;
+  background-position: center;
+
+  cursor: grab;
+  user-select: none;
+  touch-action: none;
+
+  z-index: 9999;               /* below button but above layers */
+  transition: transform 0.1s;
+}
+.toggle-token.dragging {
+  cursor: grabbing;
+  transform: scale(1.1);
+}

@@ -21,7 +21,7 @@ const commonHiddenCategories = [
 'accessories1', 'accessories2', 'accessories3',
 'hat1', 'hat2', 'hat3',
 'mask1', 'mask2', 'mask3',
-'bow1', 'bow2', 'bow3'
+'bow1', 'bow2', 'bow3','mermaid1','outsidebra1'
 ];
 
 function applyPreset1() {
@@ -92,6 +92,29 @@ function applyCommanderPreset() {
     showItem("bottomunderwear1_2.png", "bottomunderwear1");
 	showItem("shoes1_3.png", "shoes1");
 	
+}
+function applyMermaidPreset() {
+    // Hide all clothing items first
+    hideSpecificCategories(commonHiddenCategories);
+
+    // Mermaid preset items
+    showItem("mermaid1_1.png", "mermaid1");
+    showItem("topunderwear1_3.png", "topunderwear1");
+}
+function applyBeachPreset() {
+    // Hide all clothing items first
+    hideSpecificCategories(commonHiddenCategories);
+
+    // Beach preset items
+    showItem("topunderwear1_2.png", "topunderwear1");
+    showItem("bottomunderwear1_3.png", "bottomunderwear1");
+}
+function applyVPreset() {
+    // Hide all clothing items first
+    hideSpecificCategories(commonHiddenCategories);
+
+    // V preset item
+    showItem("onepiece1_2.png", "onepiece1");
 }
 // ✅ Shared showItem function for consistent item display
 function showItem(itemId, categoryName) {

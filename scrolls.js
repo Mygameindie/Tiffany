@@ -10,28 +10,36 @@ document.addEventListener("DOMContentLoaded", () => {
     { name: "Remove", action: applyunderwear },
     { name: "Bunny", action: applyBunnyPreset },
     { name: "Soldier", action: applySoldierPreset },
-    { name: "Commander", action: applyCommanderPreset }
+    { name: "Commander", action: applyCommanderPreset },
+	{ name: "mermaid", action: applyMermaidPreset },
+	{ name: "beach", action: applyBeachPreset },
+	{ name: "V", action: applyVPreset },
+	
 
     ];
 
    const categories = [
-  'bottomunderwear1','bottomunderwear2',
-  'topunderwear1','topunderwear2','stocking1',
-  'onepiece1',
-  'socks1','socks2',
-  'boxers1','boxers2',
-  'sweatshirt1','sweatshirt2',
-  'shoes1','shoes2',
-  'pants1','pants2',
-  'skirt1','skirt2',
-  'top1','top2',
-  'dress1','dress2',
-  'jacket1','jacket2',
-  'bunnysuitbow1','bunnysuitbow2',
-  'accessories1','accessories2',
-  'hat1','hat2',
-  'mask1','mask2',
-  'bow1','bow2'
+   'face1',
+  'bottomunderwear1',
+'topunderwear1',
+'stocking1',
+'onepiece1',
+'socks1',
+'boxers1',
+'sweatshirt1',
+'shoes1',
+'pants1',
+'skirt1',
+'top1',
+'dress1',
+'jacket1',
+'bunnysuitbow1',
+'outsidebra1',
+'accessories1',
+'hat1',
+'mask1',
+'bow1',
+'mermaid1'
 ];
    
 

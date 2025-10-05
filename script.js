@@ -1,4 +1,6 @@
-
+// ทางเลือกฉบับย่อ (ถ้าแตะบรรทัดเดิมได้)
+var hide;         // ป้องกัน strict mode
+var hideMap = {}; // ให้ if (hideMap[...]) ใช้งานได้เสมอ
 // ===== JSON FILES AND COLOR PALETTE =====
 const jsonFiles = [
   'bottomunderwear1.json',
@@ -13,12 +15,14 @@ const jsonFiles = [
   'top1.json',
   'dress1.json',
   'jacket1.json','dress1w.json',
+  'outsidebra1.json',
   'bunnysuitbow1.json',
   'skirt1w.json',
   'accessories1.json',
   'hat1.json',
   'mask1.json',
   'bow1.json',
+  'mermaid1.json'
 ];
 
 const colorPalette = [
@@ -52,11 +56,14 @@ function getZIndex(categoryName) {
     skirt: 100,
     top: 110,
     dress: 130,
+	outsidebra:131,
     jacket: 140,
     accessories: 150,
     hat: 160,
     mask: 170,
-    bow: 180
+    bow: 180,
+	mermaid:101,
+	bunnysuitbow: 131
   };
   return zIndexMap[base] || 0;
 }
@@ -92,58 +99,116 @@ function toggleVisibility(itemId, categoryName) {
   selectedItem.style.visibility = selectedItem.style.visibility === 'visible' ? 'hidden' : 'visible';
 
   if (selectedItem.style.visibility === 'visible') {
-    const hideMap = {
-      onepiece1: ['topunderwear1','bottomunderwear1'],
-      onepiece3: ['topunderwear3','bottomunderwear3'],
-      topunderwear1: ['onepiece1'],
-      bottomunderwear1: ['onepiece1'],
-      topunderwear3: ['onepiece3'],
-      bottomunderwear3: ['onepiece3'],
-      dress1: ['top1','pants1','skirt1','sweatshirt1','bunnysuitbow1'],
-      dress2: ['top2','pants2','skirt2','sweatshirt2','bunnysuitbow2'],
-      dress3: ['top3','pants3','skirt3','sweatshirt3','bunnysuitbow3'],
-      bunnysuitbow1: ['dress1','jacket1'],
-      bunnysuitbow2: ['dress2','jacket2'],
-      bunnysuitbow3: ['dress3','jacket3'],
-      jacket1: ['bunnysuitbow1'],
-      jacket2: ['bunnysuitbow2'],
-      jacket3: ['bunnysuitbow3'],
-      // FIX: socks mapping
-      stocking1: ['socks1'],
-      socks1: ['stocking1'],
-      stocking2: ['socks2'],
-      socks2: ['stocking2'],
-      stocking3: ['socks3'],
-      socks3: ['stocking3'],
-      pants1: ['skirt1'],
-      skirt1: ['pants1'],
-      pants2: ['skirt2'],
-      skirt2: ['pants2'],
-      pants3: ['skirt3'],
-      skirt3: ['pants3']
-    };
+  const hideMap = {
+    onepiece1: ['topunderwear1','bottomunderwear1','outsidebra1'],
+    onepiece3: ['topunderwear3','bottomunderwear3','outsidebra3'],
+    onepiece2: ['topunderwear2','bottomunderwear2','outsidebra2'], // added consistency
 
-    if (hideMap[categoryName]) {
-      hideSpecificCategories(hideMap[categoryName]);
-    } else if (
-      categoryName.startsWith('top1') || categoryName.startsWith('pants1') ||
-      categoryName.startsWith('skirt1') || categoryName.startsWith('sweatshirt1')
-    ) {
-      hideSpecificCategories(['dress1']);
-    } else if (
-      categoryName.startsWith('top2') || categoryName.startsWith('pants2') ||
-      categoryName.startsWith('skirt2') || categoryName.startsWith('sweatshirt2')
-    ) {
-      hideSpecificCategories(['dress2']);
-    } else if (
-      categoryName.startsWith('top3') || categoryName.startsWith('pants3') ||
-      categoryName.startsWith('skirt3') || categoryName.startsWith('sweatshirt3')
-    ) {
-      hideSpecificCategories(['dress3']);
-    }
-  }
+    topunderwear1: ['onepiece1'],
+    bottomunderwear1: ['onepiece1'],
+    topunderwear3: ['onepiece3'],
+    bottomunderwear3: ['onepiece3'],
+    topunderwear2: ['onepiece2'],
+    bottomunderwear2: ['onepiece2'],
+
+    dress1: ['top1','pants1','skirt1','sweatshirt1','bunnysuitbow1','outsidebra1'],
+    dress2: ['top2','pants2','skirt2','sweatshirt2','bunnysuitbow2','outsidebra2'],
+    dress3: ['top3','pants3','skirt3','sweatshirt3','bunnysuitbow3','outsidebra3'],
+
+    bunnysuitbow1: ['dress1','jacket1'],
+    bunnysuitbow2: ['dress2','jacket2'],
+    bunnysuitbow3: ['dress3','jacket3'],
+    jacket1: ['bunnysuitbow1'],
+    jacket2: ['bunnysuitbow2'],
+    jacket3: ['bunnysuitbow3'],
+
+    // FIX: socks mapping
+    stocking1: ['socks1'],
+    socks1: ['stocking1'],
+    stocking2: ['socks2'],
+    socks2: ['stocking2'],
+    stocking3: ['socks3'],
+    socks3: ['stocking3'],
+
+    pants1: ['skirt1'],
+    skirt1: ['pants1'],
+    pants2: ['skirt2'],
+    skirt2: ['pants2'],
+    pants3: ['skirt3'],
+    skirt3: ['pants3'],
+
+    // --- NEW: mermaid mapping ---
+    mermaid1: ['pants1','skirt1','socks1','shoes1','stocking1'],
+    mermaid2: ['pants2','skirt2','socks2','shoes2','stocking2'],
+    mermaid3: ['pants3','skirt3','socks3','shoes3','stocking3'],
+
+    // reverse mappings
+    pants1: ['skirt1','mermaid1'],
+    skirt1: ['pants1','mermaid1'],
+    socks1: ['stocking1','mermaid1'],
+    stocking1: ['socks1','mermaid1'],
+    shoes1: ['mermaid1'],
+
+    pants2: ['skirt2','mermaid2'],
+    skirt2: ['pants2','mermaid2'],
+    socks2: ['stocking2','mermaid2'],
+    stocking2: ['socks2','mermaid2'],
+    shoes2: ['mermaid2'],
+
+    pants3: ['skirt3','mermaid3'],
+    skirt3: ['pants3','mermaid3'],
+    socks3: ['stocking3','mermaid3'],
+    stocking3: ['socks3','mermaid3'],
+    shoes3: ['mermaid3'],
+
+    // --- NEW: outsidebra mapping (now includes onepiece) ---
+    outsidebra1: ['top1','dress1','sweatshirt1','topunderwear1','onepiece1'],
+    outsidebra2: ['top2','dress2','sweatshirt2','topunderwear2','onepiece2'],
+    outsidebra3: ['top3','dress3','sweatshirt3','topunderwear3','onepiece3'],
+
+    top1: ['outsidebra1'],
+    dress1: ['outsidebra1'],
+    sweatshirt1: ['outsidebra1'],
+    topunderwear1: ['outsidebra1'],
+    onepiece1: ['outsidebra1'],
+
+    top2: ['outsidebra2'],
+    dress2: ['outsidebra2'],
+    sweatshirt2: ['outsidebra2'],
+    topunderwear2: ['outsidebra2'],
+    onepiece2: ['outsidebra2'],
+
+    top3: ['outsidebra3'],
+    dress3: ['outsidebra3'],
+    sweatshirt3: ['outsidebra3'],
+    topunderwear3: ['outsidebra3'],
+    onepiece3: ['outsidebra3'],
+  };
+
+  // 2) ADD THIS LINE (bind the map to the outer-scoped variable)
+  hide = hideMap;
 }
 
+// Your existing logic below now works because `hide` is defined in outer scope:
+if (hideMap[categoryName]) {
+  hideSpecificCategories(hideMap[categoryName]);
+} else if (
+  categoryName.startsWith('top1') || categoryName.startsWith('pants1') ||
+  categoryName.startsWith('skirt1') || categoryName.startsWith('sweatshirt1')
+) {
+  hideSpecificCategories(['dress1']);
+} else if (
+  categoryName.startsWith('top2') || categoryName.startsWith('pants2') ||
+  categoryName.startsWith('skirt2') || categoryName.startsWith('sweatshirt2')
+) {
+  hideSpecificCategories(['dress2']);
+} else if (
+  categoryName.startsWith('top3') || categoryName.startsWith('pants3') ||
+  categoryName.startsWith('skirt3') || categoryName.startsWith('sweatshirt3')
+) {
+  hideSpecificCategories(['dress3']);
+}
+}
 // ===== EXACT NAMED-COLOR RECOLOR (per-pixel, preserves alpha) =====
 const NAMED_HUES = {
   Original: null,
@@ -655,6 +720,46 @@ document.addEventListener("DOMContentLoaded", () => {
 
   window.addEventListener('load', tryEnhance);
 
-  const mo = new MutationObserver(() => tryEnhance());
-  mo.observe(document.body, { childList: true, subtree: true });
+ const mo = new MutationObserver(() => tryEnhance());
+	mo.observe(document.body, { childList: true, subtree: true });
+})();
+// after your existing jsonFiles list:
+
+
+const _origGetZ = getZIndex;
+window.getZIndex = function(categoryName) {
+	const base = String(categoryName).replace(/\d+w?$/, ''); // face1 -> face
+	if (base === 'face') return 8; // below base (10), above nothing else
+	return _origGetZ(categoryName);
+};
+(() => {
+	function hideFaces() {
+		document.querySelectorAll('.face1, .face2').forEach(el => el.style.visibility = 'hidden');
+	}
+
+	function showFaceGroup(groupClass) {
+		hideFaces();
+		document.querySelectorAll('.' + groupClass).forEach(el => el.style.visibility = 'visible');
+	}
+
+	const oldTo2 = window.changeToBase2;
+	const oldTo3 = window.changeToBase3;
+
+	window.changeToBase2 = function() {
+		showFaceGroup('face2');
+		oldTo2?.();
+	};
+
+	window.changeToBase3 = function() {
+		showFaceGroup('face2');
+		oldTo3?.();
+	};
+
+	// If you have a base1 reset, use this:
+	window.resetToBase1 = function() {
+		document.getElementById('base-image').style.display = 'block';
+		document.getElementById('base2-image').style.display = 'none';
+		document.getElementById('base3-image').style.display = 'none';
+		hideFaces();
+	};
 })();

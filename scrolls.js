@@ -68,32 +68,24 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function showCategoryButtons(categoryName) {
-        buttonContainer.innerHTML = "";
+    buttonContainer.innerHTML = "";
 
-        const items = document.querySelectorAll(`img.${categoryName}`);
-        items.forEach(item => {
-            const buttonWrap = document.createElement('div');
-            buttonWrap.classList.add('button-wrap');
+    const items = document.querySelectorAll(`img.${categoryName}`);
+    items.forEach(item => {
+        const buttonWrap = document.createElement('div');
+        buttonWrap.classList.add('button-wrap');
 
-            const button = document.createElement("img");
-            button.src = item.src.replace(".png", "b.png");
-            button.classList.add("item-button");
-            button.onclick = () => toggleVisibility(item.id, categoryName);
-            buttonWrap.appendChild(button);
+        const button = document.createElement("img");
+        button.src = item.src.replace(".png", "b.png");
+        button.classList.add("item-button");
+        button.onclick = () => toggleVisibility(item.id, categoryName);
+        buttonWrap.appendChild(button);
 
-            const colorButton = document.createElement("button");
-            colorButton.textContent = "🎨";
-            colorButton.classList.add("color-change-button");
-            colorButton.onclick = (e) => {
-                e.stopPropagation();
-                if (item.style.visibility === "hidden") toggleVisibility(item.id, categoryName);
-                showColorPicker(item.id);
-            };
-            buttonWrap.appendChild(colorButton);
+        // Removed colorButton logic entirely
 
-            buttonContainer.appendChild(buttonWrap);
-        });
-    }
+        buttonContainer.appendChild(buttonWrap);
+    });
+}
 
     generatePresetButtons();
     generateCategoryButtons();

@@ -176,7 +176,7 @@ h3,
 }
 
 .button-1 {
-	top: 71%;
+	top: 73%;
 	left: 50%;
 }
 
@@ -481,6 +481,21 @@ h3,
 		transform: scale(0.6);
 	}
 }
+@media (max-width: 400px) {
+	.base-container {
+		transform: scale(0.5);
+	}
+}
+@media (max-width: 300px) {
+	.base-container {
+		transform: scale(0.4);
+	}
+}
+@media (max-width: 200px) {
+	.base-container {
+		transform: scale(0.3);
+	}
+}
 /* Hide old item panels under scroll bars */
 .controls > div[id^="panel-"] {
 	display: none !important;
@@ -488,6 +503,8 @@ h3,
 /* === Position and scale top control buttons inside character area === */
 .base-container {
 	position: relative;
+	width: 500px;
+	height: 450px;
 }
 
 /* 🔹 Shared style for in-container control buttons */
@@ -544,17 +561,17 @@ h3,
 	.small-button.button-1 {
 		width: 24px;
 		height: 24px;
-		top: 73%;
+		top: 63%;
 	}
 
 	#change-bg-btn {
-		top: 60%;
+		top: 1%;
 		left: 45%;
 		font-size: 11px;
 	}
 
 	#wind-button {
-		top: 60%;
+		top: 1%;
 		left: 63%;
 		font-size: 11px;
 	}
